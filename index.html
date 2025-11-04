@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gadgade Basic School</title>
+    <meta
+      name="description"
+      content="Official government, non-profit basic school in Gadgade, Nagarkot, Bhaktapur, Nepal. Providing quality, free education up to Grade 8. Serving our community."
+    />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="gadgadeschool.edu.np" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            borderRadius: {
+              xl: "1rem",
+              "2xl": "1.5rem",
+              "3xl": "2rem",
+            },
+            fontFamily: {
+              sans: ["Lato", "sans-serif"],
+              serif: ["Lora", "serif"],
+            },
+            colors: {
+              "brand-navy": "#0A2540",
+              "brand-navy-light": "#1D3A5C",
+              "brand-gold": "#BFA181",
+              "brand-gold-light": "#D9C6B3",
+              "brand-cream": "#F6F5F2",
+              "brand-charcoal": "#121212",
+              "brand-charcoal-light": "#1E1E1E",
+              "text-dark": "#1E1E1E",
+              "text-medium": "#555555",
+              "text-light": "#E0E0E0",
+            },
+            keyframes: {
+              "fade-in-down": {
+                "0%": { opacity: "0", transform: "translateY(-20px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+              "fade-in-up": {
+                "0%": { opacity: "0", transform: "translateY(20px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+              float: {
+                "0%, 100%": { transform: "translateY(0)" },
+                "50%": { transform: "translateY(-10px)" },
+              },
+            },
+            animation: {
+              "fade-in-down": "fade-in-down 0.8s ease-out forwards",
+              "fade-in-up": "fade-in-up 0.8s ease-out forwards",
+              float: "float 3s ease-in-out infinite",
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Lora:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- -->
+    <link rel="stylesheet" href="/index.css" />
+ <script type="importmap">
+      {
+        "imports": {
+          "react/": "https://aistudiocdn.com/react@^19.2.0/",
+          "react": "https://aistudiocdn.com/react@^19.2.0",
+          "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+          "framer-motion": "https://aistudiocdn.com/framer-motion@^11.3.1"
+        }
+      }
+    </script>
+    <script type="module" crossorigin src="/gadgade/assets/index-pMRNaZXZ.js"></script>
+  </head>
+  <body
+    class="bg-brand-cream text-text-dark dark:bg-brand-charcoal dark:text-text-light"
+  >
+    <div id="root"></div>
+  </body>
+</html>
