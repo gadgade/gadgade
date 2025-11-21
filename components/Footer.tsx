@@ -117,8 +117,8 @@ const Footer: React.FC = () => {
             &copy; {currentYear} <span className="text-gray-300">{t('header.schoolName')}</span>. All Rights Reserved.
           </p>
           <div className="flex items-center gap-6 text-sm text-gray-500">
-             <Link to="#" className="hover:text-brand-gold transition-colors">Privacy Policy</Link>
-             <Link to="#" className="hover:text-brand-goldyb transition-colors">Terms of Service</Link>
+             <Link to="/privacy-policy" className="hover:text-brand-gold transition-colors">{t('legal.privacyPolicy')}</Link>
+             <Link to="/terms-of-service" className="hover:text-brand-goldyb transition-colors">{t('legal.termsOfService')}</Link>
           </div>
         </div>
       </div>
