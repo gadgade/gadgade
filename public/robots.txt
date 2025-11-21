@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gadgadeschool.edu.np/sitemap.xml

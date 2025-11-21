@@ -1,8 +1,10 @@
+
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
-import { LanguageProvider } from "./components/LanguageProvider";
-import { ThemeProvider } from "./components/ThemeProvider";
+import App from "@/App";
+import { LanguageProvider } from "@/components/LanguageProvider";
+import { ThemeProvider } from "@/components/ThemeProvider";
+import { Router } from "@/components/Router";
 
 const rootElement = document.getElementById("root");
 if (!rootElement) {
@@ -12,10 +14,23 @@ if (!rootElement) {
 const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
-    <LanguageProvider>
-      <ThemeProvider>
-        <App />
-      </ThemeProvider>
-    </LanguageProvider>
+    <Router>
+      <LanguageProvider>
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
+      </LanguageProvider>
+    </Router>
   </React.StrictMode>
 );
+
+// Register the service worker for PWA functionality
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').then(registration => {
+      console.log('Service Worker registered: ', registration);
+    }).catch(registrationError => {
+      console.log('Service Worker registration failed: ', registrationError);
+    });
+  });
+}

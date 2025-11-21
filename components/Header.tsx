@@ -1,85 +1,26 @@
-import React, { useState, useEffect } from "react";
-import { useLanguage } from "./LanguageProvider";
-import { useTheme } from "./ThemeProvider";
-import SunIcon from "./icons/SunIcon";
-import MoonIcon from "./icons/MoonIcon";
-// FIX: Import Variants type from framer-motion to resolve type errors.
-import { motion, AnimatePresence, Variants } from "framer-motion";
 
-const SchoolLogo: React.FC<{ className?: string }> = ({ className }) => (
-  <svg
-    viewBox="0 0 512 512"
-    fill="currentColor"
-    xmlns="http://www.w3.org/2000/svg"
-    className={className}
-  >
-    <circle
-      cx="256"
-      cy="256"
-      r="240"
-      stroke="currentColor"
-      strokeWidth="16"
-      fill="none"
-    />
-    <path
-      id="curve"
-      d="M129.5,431.5 A200,200 0 0,1 129.5,80.5"
-      fill="none"
-      stroke="none"
-    />
-    <text fontSize="54" fontWeight="bold">
-      <textPath href="#curve" startOffset="50%" textAnchor="middle">
-        श्री गडगडे आधारभूत विद्यालय
-      </textPath>
-    </text>
-    <path
-      d="M129.5,431.5 A200,200 0 0,0 382.5,431.5"
-      fill="none"
-      id="curve-bottom"
-    />
-    <text fontSize="54" fontWeight="bold">
-      <textPath href="#curve-bottom" startOffset="50%" textAnchor="middle">
-        चाँगुनारायण न.पा. - ६
-      </textPath>
-    </text>
-    <path
-      d="M256 150 L160 310 L352 310 Z"
-      stroke="currentColor"
-      strokeWidth="12"
-      fill="none"
-    />
-    <path
-      d="M256 340 L160 180 L352 180 Z"
-      stroke="currentColor"
-      strokeWidth="12"
-      fill="none"
-    />
-    <path
-      d="M190 285 L210 280 L225 288 L240 282 L256 290 L270 284 L285 290 L300 282 L322 285"
-      stroke="currentColor"
-      strokeWidth="8"
-      fill="none"
-    />
-    <path d="M220 250 V280" stroke="currentColor" strokeWidth="8" fill="none" />
-    <path d="M240 250 V280" stroke="currentColor" strokeWidth="8" fill="none" />
-    <path d="M272 250 V280" stroke="currentColor" strokeWidth="8" fill="none" />
-    <path d="M292 250 V280" stroke="currentColor" strokeWidth="8" fill="none" />
-    <path d="M210 250 H302" stroke="currentColor" strokeWidth="8" fill="none" />
-    <path d="M115,370 L130,380 L145,370 L135,355 Z" />
-    <path d="M397,370 L382,380 L367,370 L377,355 Z" />
-  </svg>
-);
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "@/components/Router";
+import { useLanguage } from "@/components/LanguageProvider";
+import { useTheme } from "@/components/ThemeProvider";
+import SunIcon from "@/components/icons/SunIcon";
+import MoonIcon from "@/components/icons/MoonIcon";
+import SchoolLogo from "@/components/icons/SchoolLogo";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 
 const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState("home");
   const { t, toggleLanguage } = useLanguage();
   const { theme, toggleTheme } = useTheme();
+  const location = useLocation();
+
+  // Check if we are on the home page
+  const isHome = location.pathname === "/";
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      setScrolled(window.scrollY > 20);
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
@@ -97,131 +38,125 @@ const Header: React.FC = () => {
   }, [isOpen]);
 
   const navLinks = [
-    { name: t("header.home"), href: "#home" },
-    { name: t("header.about"), href: "#about" },
-    { name: t("header.academics"), href: "#academics" },
-    { name: t("header.faculty"), href: "#faculty" },
-    { name: t("header.gallery"), href: "#gallery" },
-    { name: t("header.sponsors"), href: "#sponsors" },
-    { name: t("header.contact"), href: "#contact" },
+    { name: t("header.home"), path: "/" },
+    { name: t("header.about"), path: "/about" },
+    { name: t("header.academics"), path: "/academics" },
+    { name: t("header.faculty"), path: "/faculty" },
+    { name: t("header.gallery"), path: "/gallery" },
+    { name: t("header.sponsors"), path: "/sponsors" },
+    { name: t("header.contact"), path: "/contact" },
   ];
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      { rootMargin: "-30% 0px -70% 0px" }
-    );
-
-    document.querySelectorAll("main section").forEach((section) => {
-      observer.observe(section);
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  // FIX: Explicitly type variants with Variants to satisfy TypeScript.
   const mobileMenuVariants: Variants = {
-    hidden: { y: "-100vh", opacity: 0 },
+    hidden: { opacity: 0, x: "100%" },
     visible: {
-      y: 0,
       opacity: 1,
-      transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+      x: 0,
+      transition: { type: "spring", stiffness: 300, damping: 30 },
     },
     exit: {
-      y: "-100vh",
       opacity: 0,
-      transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
+      x: "100%",
+      transition: { duration: 0.3 },
     },
   };
 
-  // FIX: Explicitly type variants with Variants to satisfy TypeScript.
   const mobileNavContainerVariants: Variants = {
     hidden: {},
-    visible: { transition: { staggerChildren: 0.08, delayChildren: 0.3 } },
+    visible: { transition: { staggerChildren: 0.05, delayChildren: 0.1 } },
   };
 
-  // FIX: Explicitly type variants with Variants to satisfy TypeScript.
   const mobileNavLinkVariants: Variants = {
-    hidden: { y: 20, opacity: 0 },
+    hidden: { x: 20, opacity: 0 },
     visible: {
-      y: 0,
+      x: 0,
       opacity: 1,
-      transition: { duration: 0.4, ease: "easeOut" },
+      transition: { duration: 0.3 },
     },
   };
+
+  // Determine header style: Solid if scrolled OR if not on home page
+  const isSolidHeader = scrolled || !isHome;
 
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 text-white ${
-          scrolled
-            ? "py-3 bg-brand-navy/90 dark:bg-brand-charcoal-light/90 backdrop-blur-lg shadow-xl"
-            : "py-4 bg-transparent"
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b ${
+          isSolidHeader
+            ? "py-2 bg-brand-navy/95 dark:bg-brand-charcoal/95 backdrop-blur-xl border-white/10 shadow-lg"
+            : "py-4 bg-transparent border-transparent"
         }`}
       >
-        <div className="container mx-auto flex justify-between items-center px-6 md:px-10">
-          <a href="#home" className="flex items-center gap-3">
-            <SchoolLogo className="w-10 h-10 lg:w-12 lg:h-12" />
-            <span className="text-lg lg:text-xl font-bold font-serif tracking-tight bg-brand-gold text-brand-navy rounded-full px-4 py-1 whitespace-nowrap">
-              {t("header.schoolName")}
-            </span>
-          </a>
-          <nav className="hidden lg:flex items-center space-x-1">
+        <div className="container mx-auto flex justify-between items-center px-6">
+          <Link to="/" className="flex items-center gap-3 group">
+            <div className="bg-white rounded-full p-1 shadow-lg group-hover:rotate-12 transition-transform duration-300">
+                <SchoolLogo className="w-10 h-10 lg:w-12 lg:h-12 text-brand-navy" />
+            </div>
+            <div className="flex flex-col">
+                <span className={`text-lg lg:text-xl font-bold font-serif tracking-tight whitespace-nowrap leading-tight ${isSolidHeader ? "text-white" : "text-white drop-shadow-md"}`}>
+                {t("header.schoolName")}
+                </span>
+                <span className={`text-xs font-sans tracking-widest uppercase opacity-80 ${isSolidHeader ? "text-gray-300" : "text-gray-200 drop-shadow-sm"}`}>
+                    Est. 1993 / 2050 BS
+                </span>
+            </div>
+          </Link>
+          
+          <nav className="hidden lg:flex items-center gap-1 p-1 rounded-full bg-black/20 backdrop-blur-md border border-white/10">
             {navLinks.map((link) => {
-              const isActive = activeSection === link.href.substring(1);
+              const isActive = location.pathname === link.path;
               return (
-                <motion.a
+                <Link
                   key={link.name}
-                  href={link.href}
-                  className={`text-lg px-4 py-2 font-medium rounded-md relative transition-colors duration-300 ${
-                    isActive ? "text-white" : "text-gray-300 hover:text-white"
+                  to={link.path}
+                  className={`relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                    isActive ? "text-brand-navy font-bold" : "text-white hover:text-brand-gold"
                   }`}
-                  whileHover={{ y: -2 }}
-                  transition={{ type: "spring", stiffness: 300 }}
                 >
                   {isActive && (
                     <motion.div
-                      className="absolute inset-0 bg-white/10 dark:bg-white/10 rounded-lg -z-10"
+                      className="absolute inset-0 bg-brand-gold rounded-full shadow-sm"
                       layoutId="active-pill"
+                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                      style={{ zIndex: -1 }}
                     />
                   )}
                   {link.name}
-                </motion.a>
+                </Link>
               );
             })}
+          </nav>
+
+          <div className="hidden lg:flex items-center gap-3">
             <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onClick={toggleTheme}
-              className="p-2 rounded-full hover:bg-white/20 transition-colors"
+              className={`p-2.5 rounded-full transition-colors ${isSolidHeader ? "bg-white/10 hover:bg-white/20 text-white" : "bg-black/20 hover:bg-black/40 text-white backdrop-blur-sm"}`}
               aria-label="Toggle theme"
             >
               {theme === "light" ? (
-                <MoonIcon className="w-6 h-6" />
+                <MoonIcon className="w-5 h-5" />
               ) : (
-                <SunIcon className="w-6 h-6" />
+                <SunIcon className="w-5 h-5" />
               )}
             </motion.button>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={toggleLanguage}
-              className="bg-brand-gold text-brand-navy font-bold py-2 px-4 rounded-md hover:opacity-90 transition-opacity duration-300 ml-2"
+              className={`font-bold py-2 px-4 rounded-full transition-all duration-300 text-sm border ${isSolidHeader ? "bg-white text-brand-navy border-white hover:bg-gray-100" : "bg-transparent text-white border-white hover:bg-white hover:text-brand-navy backdrop-blur-sm"}`}
             >
               {t("header.languageToggle")}
             </motion.button>
-          </nav>
-          <div className="lg:hidden">
-            <button
-              onClick={() => setIsOpen(true)}
-              className="focus:outline-none p-1"
-            >
+          </div>
+
+          <div className="lg:hidden flex items-center gap-4">
+             <motion.button
+                whileTap={{ scale: 0.9 }}
+                onClick={() => setIsOpen(true)}
+                className="focus:outline-none p-2 rounded-lg bg-white/10 backdrop-blur-md text-white border border-white/10"
+             >
               <svg
                 className="w-6 h-6"
                 fill="none"
@@ -232,93 +167,93 @@ const Header: React.FC = () => {
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth="2"
+                  strokeWidth="2.5"
                   d="M4 6h16M4 12h16M4 18h16"
                 ></path>
               </svg>
-            </button>
+            </motion.button>
           </div>
         </div>
       </header>
+
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="lg:hidden fixed inset-0 bg-brand-navy/95 dark:bg-brand-charcoal/95 backdrop-blur-lg z-[100] flex flex-col p-6"
-            variants={mobileMenuVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
+            className="lg:hidden fixed inset-0 z-[100] flex justify-end"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
           >
-            <div className="w-full flex justify-end">
-              <button
-                onClick={() => setIsOpen(false)}
-                className="focus:outline-none p-1"
-              >
-                <svg
-                  className="w-8 h-8 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  ></path>
-                </svg>
-              </button>
-            </div>
-
-            <motion.nav
-              className="flex-grow flex flex-col items-center justify-center space-y-6"
-              variants={mobileNavContainerVariants}
-              initial="hidden"
-              animate="visible"
+             <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
+             
+            <motion.div 
+                className="w-[80%] max-w-sm bg-brand-navy dark:bg-brand-charcoal h-full shadow-2xl relative flex flex-col"
+                variants={mobileMenuVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
             >
-              {navLinks.map((link) => (
-                <motion.a
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => setIsOpen(false)}
-                  className="text-4xl font-serif text-white hover:text-brand-gold transition-colors duration-300"
-                  variants={mobileNavLinkVariants}
-                >
-                  {link.name}
-                </motion.a>
-              ))}
-            </motion.nav>
+                <div className="p-6 flex justify-between items-center border-b border-white/10">
+                    <span className="text-xl font-serif font-bold text-white">{t("header.schoolName")}</span>
+                    <button
+                        onClick={() => setIsOpen(false)}
+                        className="focus:outline-none p-2 rounded-full hover:bg-white/10 text-white"
+                    >
+                        <svg
+                        className="w-6 h-6"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                        >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M6 18L18 6M6 6l12 12"
+                        ></path>
+                        </svg>
+                    </button>
+                </div>
 
-            <motion.div
-              className="flex items-center justify-center gap-6"
-              variants={mobileNavContainerVariants}
-              initial="hidden"
-              animate="visible"
-            >
-              <motion.button
-                variants={mobileNavLinkVariants}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={toggleTheme}
-                className="p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
-                aria-label="Toggle theme"
-              >
-                {theme === "light" ? (
-                  <MoonIcon className="w-7 h-7 text-white" />
-                ) : (
-                  <SunIcon className="w-7 h-7 text-white" />
-                )}
-              </motion.button>
-              <motion.button
-                variants={mobileNavLinkVariants}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={toggleLanguage}
-                className="bg-brand-gold text-brand-navy font-bold py-3 px-5 rounded-md hover:opacity-90 transition-opacity duration-300"
-              >
-                {t("header.languageToggle")}
-              </motion.button>
+                <motion.nav
+                className="flex-grow px-6 py-8 overflow-y-auto"
+                variants={mobileNavContainerVariants}
+                initial="hidden"
+                animate="visible"
+                >
+                    <ul className="space-y-4">
+                        {navLinks.map((link) => (
+                            <motion.li key={link.name} variants={mobileNavLinkVariants}>
+                                <Link
+                                to={link.path}
+                                onClick={() => setIsOpen(false)}
+                                className={`block text-2xl font-serif transition-colors duration-300 ${location.pathname === link.path ? "text-brand-gold" : "text-white hover:text-brand-gold/70"}`}
+                                >
+                                {link.name}
+                                </Link>
+                            </motion.li>
+                        ))}
+                    </ul>
+                </motion.nav>
+
+                <div className="p-6 border-t border-white/10 bg-brand-navy-light/30">
+                    <div className="flex items-center justify-between">
+                        <button
+                            onClick={toggleTheme}
+                            className="flex items-center gap-3 text-white hover:text-brand-gold transition-colors"
+                        >
+                            {theme === "light" ? <MoonIcon className="w-5 h-5" /> : <SunIcon className="w-5 h-5" />}
+                            <span className="text-sm font-medium">{theme === 'light' ? 'Dark Mode' : 'Light Mode'}</span>
+                        </button>
+                        <button
+                            onClick={toggleLanguage}
+                            className="px-4 py-2 rounded-lg bg-brand-gold text-brand-navy font-bold text-sm"
+                        >
+                            {t("header.languageToggle")}
+                        </button>
+                    </div>
+                </div>
             </motion.div>
           </motion.div>
         )}

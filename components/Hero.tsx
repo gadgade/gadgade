@@ -1,101 +1,102 @@
 
 import React from 'react';
-import { useLanguage } from './LanguageProvider';
-// FIX: Import Variants type from framer-motion
-import { motion, Variants } from 'framer-motion';
-import ChevronDownIcon from './icons/ChevronDownIcon';
+import { Link } from '@/components/Router';
+import { useLanguage } from '@/components/LanguageProvider';
+import { motion } from 'framer-motion';
 
 const Hero: React.FC = () => {
   const { t, language } = useLanguage();
 
-  // FIX: Explicitly type variants with Variants
-  const containerVariants: Variants = {
-    hidden: {},
-    visible: { transition: { staggerChildren: 0.3, delayChildren: 0.3 } }
-  };
-
-  // FIX: Explicitly type variants with Variants
-  const itemVariants: Variants = {
-      hidden: { opacity: 0, y: 30 },
-      visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: 'easeOut' } }
-  };
-
   return (
-    <section id="home" className="h-screen relative flex items-center justify-center text-center text-white overflow-hidden">
+    <section 
+      id="home" 
+      className="relative h-screen w-full sticky top-0 z-0 flex items-center justify-center overflow-hidden"
+    >
       
-      {/* Google Map Background */}
-      <div className="absolute top-0 left-0 w-full h-full bg-brand-navy z-0">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3531.938172408696!2d85.5143231107501!3d27.719195176076454!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb04290d5c71dd%3A0x668663417515bd17!2sShree%20Gadgade%20Basic%20School!5e0!3m2!1sen!2snp!4v1762211904828!5m2!1sen!2snp"
-          width="100%"
-          height="100%"
-          style={{ border: 0 }}
-          allowFullScreen={false}
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-          className="pointer-events-none filter grayscale brightness-50 opacity-50"
-        ></iframe>
+      {/* 1. Full Screen Sticky Background Image */}
+      <div className="absolute inset-0 z-0">
+        <motion.img 
+          initial={{ scale: 1.1 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 2, ease: "easeOut" }}
+          src="https://res.cloudinary.com/dph6mqggr/image/upload/v1762218893/banner_cj0zgv.jpg" 
+          alt="Gadgade Basic School"
+          className="w-full h-full object-cover blur-md" 
+        />
+        
+        {/* Sophisticated Overlays for Depth and Readability */}
+        <div className="absolute inset-0 bg-brand-navy/60 mix-blend-multiply"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-navy/80 via-transparent to-brand-navy/90"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_rgba(0,0,0,0.4)_100%)]"></div>
       </div>
-      
-      {/* Gradient Overlay */}
-      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-brand-navy/60 via-brand-navy/80 to-brand-navy z-10"></div>
 
-      <motion.div 
-        className="relative z-20 p-6"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        <motion.h1 variants={itemVariants} className="text-4xl md:text-5xl lg:text-7xl font-black font-serif mb-4">
+      {/* 2. Centered Hero Content */}
+      <div className="container mx-auto px-6 relative z-10 text-center max-w-5xl mt-16">
+        
+        <motion.div
+           initial={{ opacity: 0, y: 20 }}
+           animate={{ opacity: 1, y: 0 }}
+           transition={{ duration: 0.8, delay: 0.2 }}
+           className="inline-block mb-6"
+        >
+             <div className="flex items-center justify-center gap-3 py-2 px-6 rounded-full bg-white/10 border border-white/20 text-brand-gold text-sm font-bold tracking-[0.2em] uppercase backdrop-blur-md shadow-2xl">
+                <span className="w-2 h-2 rounded-full bg-brand-gold animate-pulse"></span>
+                <span>Est. 1993 / 2050 BS</span>
+             </div>
+        </motion.div>
+
+        <motion.h1 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-5xl md:text-7xl lg:text-8xl font-black font-serif text-white mb-8 leading-[1.1] drop-shadow-2xl"
+        >
             {language === 'ne' ? (
                 <>
+                    <span className="block text-gray-200 text-3xl md:text-5xl font-normal mb-4">{t('hero.welcome1')}</span>
                     <span className="text-brand-gold">{t('hero.welcome2')}</span>
-                    {t('hero.welcome1')}
                 </>
             ) : (
                 <>
-                    {t('hero.welcome1')}
-                    <span className="text-brand-gold">{t('hero.welcome2')}</span>
+                    <span className="block text-gray-300 text-2xl md:text-4xl font-sans font-light tracking-wide mb-4">{t('hero.welcome1')}</span>
+                    <span className="text-transparent bg-clip-text bg-gradient-to-br from-brand-gold to-amber-200 filter drop-shadow-lg">{t('hero.welcome2')}</span>
                 </>
             )}
         </motion.h1>
-        <motion.p variants={itemVariants} className="text-lg md:text-2xl mb-8 max-w-3xl mx-auto text-gray-200">{t('hero.slogan')}</motion.p>
-        <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <motion.a 
-                href="#about" 
-                className="bg-brand-gold hover:bg-brand-gold-light text-brand-navy font-bold py-3 px-8 rounded-full text-lg inline-block w-full sm:w-auto transition-colors"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ duration: 0.2 }}
-                >
-              {t('hero.learnMore')}
-            </motion.a>
-            <motion.a 
-                href="https://www.google.com/maps/search/?api=1&query=Shree+Gadgade+Basic+School&query_place_id=0x39eb04290d5c71dd:0x668663417515bd17"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-transparent border-2 border-brand-gold text-white hover:bg-brand-gold hover:text-brand-navy font-bold py-3 px-8 rounded-full text-lg inline-block w-full sm:w-auto transition-colors duration-300"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ duration: 0.2 }}
-                >
-              {t('hero.seeOnMap')}
-            </motion.a>
+        
+        <motion.p 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="text-lg md:text-2xl text-gray-200 mb-12 max-w-3xl mx-auto leading-relaxed font-light text-shadow-sm"
+        >
+            {t('hero.slogan')}
+            <span className="block mt-2 text-gray-400 text-base md:text-lg">
+                Empowering the next generation of Nagarkot with free, quality education.
+            </span>
+        </motion.p>
+        
+        <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-6"
+        >
+            <Link 
+                to="/academics" 
+                className="min-w-[200px] bg-brand-gold text-brand-navy font-bold py-4 px-8 rounded-full hover:bg-white transition-all duration-300 shadow-[0_0_30px_rgba(191,161,129,0.4)] hover:shadow-[0_0_40px_rgba(255,255,255,0.6)] transform hover:-translate-y-1"
+            >
+                Our Academics
+            </Link>
+            <Link 
+                to="/contact"
+                className="min-w-[200px] bg-white/5 backdrop-blur-md border border-white/20 text-white hover:bg-white/10 font-bold py-4 px-8 rounded-full transition-all duration-300 hover:border-white/40"
+            >
+                {t('contact.title')}
+            </Link>
         </motion.div>
-      </motion.div>
-      
-      {/* Scroll Down Indicator */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20">
-        <a href="#about" aria-label="Scroll down">
-          <motion.div 
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <ChevronDownIcon className="w-8 h-8 text-white/70 hover:text-white transition-colors" />
-          </motion.div>
-        </a>
       </div>
-
+      
     </section>
   );
 };

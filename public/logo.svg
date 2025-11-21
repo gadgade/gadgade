@@ -1,0 +1,37 @@
+
+<svg
+  viewBox="0 0 512 512"
+  xmlns="http://www.w3.org/2000/svg"
+  fill="#BFA181"
+  stroke="#BFA181"
+>
+  <circle
+    cx="256"
+    cy="256"
+    r="240"
+    stroke-width="16"
+    fill="none"
+  />
+  <path
+    d="M256 150 L160 310 L352 310 Z"
+    stroke-width="12"
+    fill="none"
+  />
+  <path
+    d="M256 340 L160 180 L352 180 Z"
+    stroke-width="12"
+    fill="none"
+  />
+  <path
+    d="M190 285 L210 280 L225 288 L240 282 L256 290 L270 284 L285 290 L300 282 L322 285"
+    stroke-width="8"
+    fill="none"
+  />
+  <path d="M220 250 V280" stroke-width="8" fill="none" />
+  <path d="M240 250 V280" stroke-width="8" fill="none" />
+  <path d="M272 250 V280" stroke-width="8" fill="none" />
+  <path d="M292 250 V280" stroke-width="8" fill="none" />
+  <path d="M210 250 H302" stroke-width="8" fill="none" />
+  <path d="M115,370 L130,380 L145,370 L135,355 Z" />
+  <path d="M397,370 L382,380 L367,370 L377,355 Z" />
+</svg>

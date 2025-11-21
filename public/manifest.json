@@ -1,0 +1,18 @@
+{
+  "name": "Gadgade Basic School",
+  "short_name": "Gadgade School",
+  "description": "Official government, non-profit basic school in Gadgade, Nagarkot, Bhaktapur, Nepal. Providing quality, free education up to Grade 8.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0A2540",
+  "theme_color": "#0A2540",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "https://res.cloudinary.com/dph6mqggr/image/upload/v1763725673/logo_csnpk8.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
