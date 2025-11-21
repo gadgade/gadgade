@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/components/LanguageProvider';
 import { Link } from '@/components/Router';
 
-// Define window properties for TypeScript to avoid errors
+// Define window properties for TypeScript
 declare global {
   interface Window {
     dataLayer: any[];
@@ -11,8 +11,7 @@ declare global {
   }
 }
 
-// Google Analytics Measurement ID
-// Standard GA4 IDs start with 'G-'. We append it if the user provided ID (35T8BYGKVC) doesn't have it.
+// Google Analytics 4 Measurement ID
 const GA_MEASUREMENT_ID = 'G-35T8BYGKVC';
 
 const CookieConsent: React.FC = () => {
@@ -22,33 +21,32 @@ const CookieConsent: React.FC = () => {
   useEffect(() => {
     const consent = localStorage.getItem('cookieConsent');
     
-    // 1. Initialize dataLayer immediately
-    if (!window.dataLayer) {
-        window.dataLayer = window.dataLayer || [];
-        window.gtag = function(){window.dataLayer.push(arguments);}
+    // Initialize dataLayer
+    window.dataLayer = window.dataLayer || [];
+    function gtag(...args: any[]) {
+      window.dataLayer.push(args);
     }
+    window.gtag = gtag;
 
-    // 2. Handle Default Consent State (Consent Mode v2)
+    // Default Consent Mode v2 Setup
+    // We set defaults immediately before loading the script
     if (consent === null) {
-      // User has not decided yet: Default to 'denied'
       setIsVisible(true);
-      window.gtag('consent', 'default', {
+      gtag('consent', 'default', {
         'ad_storage': 'denied',
         'ad_user_data': 'denied',
         'ad_personalization': 'denied',
         'analytics_storage': 'denied'
       });
     } else if (consent === 'true') {
-      // User previously accepted: Default to 'granted'
-      window.gtag('consent', 'default', {
+      gtag('consent', 'default', {
         'ad_storage': 'granted',
         'ad_user_data': 'granted',
         'ad_personalization': 'granted',
         'analytics_storage': 'granted'
       });
     } else {
-      // User previously declined: Default to 'denied'
-       window.gtag('consent', 'default', {
+      gtag('consent', 'default', {
         'ad_storage': 'denied',
         'ad_user_data': 'denied',
         'ad_personalization': 'denied',
@@ -56,35 +54,25 @@ const CookieConsent: React.FC = () => {
       });
     }
 
-    // 3. Load the Google Tag Script
-    // Even if consent is denied, we load the tag. 
-    // Because we set consent to denied above, Google will not set cookies but can send basic pings (if configured).
-    loadGoogleTagScript();
+    // Load Google Tag Script (gtag.js)
+    const scriptId = 'google-analytics-script';
+    if (!document.getElementById(scriptId)) {
+      const script = document.createElement('script');
+      script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+      script.async = true;
+      script.id = scriptId;
+      document.head.appendChild(script);
 
+      // Config command
+      gtag('js', new Date());
+      gtag('config', GA_MEASUREMENT_ID);
+    }
   }, []);
-
-  const loadGoogleTagScript = () => {
-    if (document.getElementById('google-analytics')) return;
-
-    const script = document.createElement('script');
-    script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
-    script.async = true;
-    script.id = 'google-analytics';
-    document.head.appendChild(script);
-
-    // Configure the specific property
-    window.gtag('js', new Date());
-    window.gtag('config', GA_MEASUREMENT_ID);
-    
-    console.log('Google Tag initialized (Consent Mode v2 active).');
-  };
 
   const handleAccept = () => {
     localStorage.setItem('cookieConsent', 'true');
     setIsVisible(false);
     
-    // Update consent to 'granted'
-    // This immediately activates full tracking without page reload
     window.gtag('consent', 'update', {
       'ad_storage': 'granted',
       'ad_user_data': 'granted',
@@ -97,7 +85,6 @@ const CookieConsent: React.FC = () => {
     localStorage.setItem('cookieConsent', 'false');
     setIsVisible(false);
     
-    // Explicitly update to denied (redundant if default was denied, but safe)
     window.gtag('consent', 'update', {
       'ad_storage': 'denied',
       'ad_user_data': 'denied',
