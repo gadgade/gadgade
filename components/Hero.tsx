@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from '@/components/Router';
 import { useLanguage } from '@/components/LanguageProvider';
@@ -19,7 +18,7 @@ const Hero: React.FC = () => {
           initial={{ scale: 1.1 }}
           animate={{ scale: 1 }}
           transition={{ duration: 2, ease: "easeOut" }}
-          src="https://res.cloudinary.com/dph6mqggr/image/upload/v1762218893/banner_cj0zgv.jpg" 
+          src="https://res.cloudinary.com/dph6mqggr/image/upload/f_auto,q_auto/v1762218893/banner_cj0zgv.jpg" 
           alt="Gadgade Basic School"
           className="w-full h-full object-cover blur-md" 
         />

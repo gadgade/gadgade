@@ -1,3 +1,4 @@
+
 import React from "react";
 import { useLanguage } from "@/components/LanguageProvider";
 import { motion, Variants } from "framer-motion";
@@ -66,7 +67,7 @@ const Sponsors: React.FC = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4, duration: 0.8 }}
-                    className="text-xl text-gray-300 font-light leading-relaxed max-w-2xl mx-auto"
+                    className="text-xl text-gray-300 font-light leading-relaxed max-w-2xl mx-auto text-justify md:text-center"
                 >
                     {t("sponsors.subtitle")}
                 </motion.p>
@@ -124,7 +125,7 @@ const Sponsors: React.FC = () => {
 
                  <div className="relative z-10">
                     <h2 className="text-3xl md:text-5xl font-serif font-bold mb-6">{t("sponsors.becomeSponsorTitle")}</h2>
-                    <p className="text-lg text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed">
+                    <p className="text-lg text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed text-justify md:text-center">
                         {t("sponsors.becomeSponsorText")}
                     </p>
                     <Link 

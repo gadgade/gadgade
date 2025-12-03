@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback } from "react";
 import { useLanguage } from "@/components/LanguageProvider";
 import { motion, AnimatePresence } from "framer-motion";
@@ -20,27 +19,27 @@ const Gallery: React.FC = () => {
   const [selectedId, setSelectedId] = useState<number | null>(null);
 
   const images: GalleryItem[] = [
-    { id: 0, category: "Leadership", src: "https://res.cloudinary.com/dph6mqggr/image/upload/v1763740110/principal_gv9xzb.jpg", caption: "Our Principal at work" },
-    { id: 1, category: "Students", src: "https://res.cloudinary.com/dph6mqggr/image/upload/v1762218894/students-001_vnszuv.jpg", caption: "Morning assembly" },
-    { id: 2, category: "Faculty", src: "https://res.cloudinary.com/dph6mqggr/image/upload/v1762218893/teacher-board-001_tyjqah.jpg", caption: "Interactive classroom session" },
-    { id: 3, category: "Classroom", src: "https://res.cloudinary.com/dph6mqggr/image/upload/v1762218896/children-room-001_agh6as.jpg", caption: "Early childhood development" },
-    { id: 4, category: "Classroom", src: "https://res.cloudinary.com/dph6mqggr/image/upload/v1762218894/children-room-002_slosto.jpg", caption: "Learning through play" },
-    { id: 5, category: "Campus", src: "https://res.cloudinary.com/dph6mqggr/image/upload/v1762218896/building-001_jjvltm.jpg", caption: "School Building" },
-    { id: 6, category: "Campus", src: "https://res.cloudinary.com/dph6mqggr/image/upload/v1762218895/building-002_exmf3u.jpg", caption: "Playground area" },
-    { id: 7, category: "Events", src: "https://res.cloudinary.com/dph6mqggr/image/upload/v1762218897/france-001_b0cfkk.jpg", caption: "Cultural exchange program" },
+    { id: 0, category: "Leadership", src: "https://res.cloudinary.com/dph6mqggr/image/upload/f_auto,q_auto/v1763740110/principal_gv9xzb.jpg", caption: "Our Principal at work" },
+    { id: 1, category: "Students", src: "https://res.cloudinary.com/dph6mqggr/image/upload/f_auto,q_auto/v1762218894/students-001_vnszuv.jpg", caption: "Morning assembly" },
+    { id: 2, category: "Faculty", src: "https://res.cloudinary.com/dph6mqggr/image/upload/f_auto,q_auto/v1762218893/teacher-board-001_tyjqah.jpg", caption: "Interactive classroom session" },
+    { id: 3, category: "Classroom", src: "https://res.cloudinary.com/dph6mqggr/image/upload/f_auto,q_auto/v1762218896/children-room-001_agh6as.jpg", caption: "Early childhood development" },
+    { id: 4, category: "Classroom", src: "https://res.cloudinary.com/dph6mqggr/image/upload/f_auto,q_auto/v1762218894/children-room-002_slosto.jpg", caption: "Learning through play" },
+    { id: 5, category: "Campus", src: "https://res.cloudinary.com/dph6mqggr/image/upload/f_auto,q_auto/v1762218896/building-001_jjvltm.jpg", caption: "School Building" },
+    { id: 6, category: "Campus", src: "https://res.cloudinary.com/dph6mqggr/image/upload/f_auto,q_auto/v1762218895/building-002_exmf3u.jpg", caption: "Playground area" },
+    { id: 7, category: "Events", src: "https://res.cloudinary.com/dph6mqggr/image/upload/f_auto,q_auto/v1762218897/france-001_b0cfkk.jpg", caption: "Cultural exchange program" },
     // New images
-    { id: 8, category: "School Life", src: "https://res.cloudinary.com/dph6mqggr/image/upload/v1763733510/t3d8xGQ5_e9nmqz.jpg", caption: "Student Activities" },
-    { id: 9, category: "Events", src: "https://res.cloudinary.com/dph6mqggr/image/upload/v1763733511/nDqSBd3h_kty0dk.jpg", caption: "Community Gathering" },
-    { id: 10, category: "Students", src: "https://res.cloudinary.com/dph6mqggr/image/upload/v1763733509/H6ml3I_s_ortukr.jpg", caption: "Classroom Moments" },
-    { id: 11, category: "Events", src: "https://res.cloudinary.com/dph6mqggr/image/upload/v1763733509/QefKsjij_yoq4yx.jpg", caption: "School Celebration" },
-    { id: 12, category: "Students", src: "https://res.cloudinary.com/dph6mqggr/image/upload/v1763733509/SOiTxqoB_fgwxy0.jpg", caption: "Learning Together" },
-    { id: 13, category: "Creativity", src: "https://res.cloudinary.com/dph6mqggr/image/upload/v1763733509/pkbJwCe8_cod6e7.jpg", caption: "Arts and Crafts" },
-    { id: 14, category: "Academics", src: "https://res.cloudinary.com/dph6mqggr/image/upload/v1763733509/kLzsOnmf_faxbvy.jpg", caption: "Focused Learning" },
-    { id: 15, category: "Sports", src: "https://res.cloudinary.com/dph6mqggr/image/upload/v1763733509/OaVHG0LS_bpedp2.jpg", caption: "Physical Education" },
-    { id: 16, category: "School Life", src: "https://res.cloudinary.com/dph6mqggr/image/upload/v1763733508/AyJ2WKys_eb5cxg.jpg", caption: "Happy Students" },
-    { id: 17, category: "Community", src: "https://res.cloudinary.com/dph6mqggr/image/upload/v1763733508/Io4TGDR4_elh1bl.jpg", caption: "Parent Interaction" },
-    { id: 18, category: "Campus", src: "https://res.cloudinary.com/dph6mqggr/image/upload/v1763733508/nHMDJfTx_xt6ndb.jpg", caption: "School Premises" },
-    { id: 19, category: "Education", src: "https://res.cloudinary.com/dph6mqggr/image/upload/v1763733508/5BzgLBS-_efyogc.jpg", caption: "Bright Futures" },
+    { id: 8, category: "School Life", src: "https://res.cloudinary.com/dph6mqggr/image/upload/f_auto,q_auto/v1763733510/t3d8xGQ5_e9nmqz.jpg", caption: "Student Activities" },
+    { id: 9, category: "Events", src: "https://res.cloudinary.com/dph6mqggr/image/upload/f_auto,q_auto/v1763733511/nDqSBd3h_kty0dk.jpg", caption: "Community Gathering" },
+    { id: 10, category: "Students", src: "https://res.cloudinary.com/dph6mqggr/image/upload/f_auto,q_auto/v1763733509/H6ml3I_s_ortukr.jpg", caption: "Classroom Moments" },
+    { id: 11, category: "Events", src: "https://res.cloudinary.com/dph6mqggr/image/upload/f_auto,q_auto/v1763733509/QefKsjij_yoq4yx.jpg", caption: "School Celebration" },
+    { id: 12, category: "Students", src: "https://res.cloudinary.com/dph6mqggr/image/upload/f_auto,q_auto/v1763733509/SOiTxqoB_fgwxy0.jpg", caption: "Learning Together" },
+    { id: 13, category: "Creativity", src: "https://res.cloudinary.com/dph6mqggr/image/upload/f_auto,q_auto/v1763733509/pkbJwCe8_cod6e7.jpg", caption: "Arts and Crafts" },
+    { id: 14, category: "Academics", src: "https://res.cloudinary.com/dph6mqggr/image/upload/f_auto,q_auto/v1763733509/kLzsOnmf_faxbvy.jpg", caption: "Focused Learning" },
+    { id: 15, category: "Sports", src: "https://res.cloudinary.com/dph6mqggr/image/upload/f_auto,q_auto/v1763733509/OaVHG0LS_bpedp2.jpg", caption: "Physical Education" },
+    { id: 16, category: "School Life", src: "https://res.cloudinary.com/dph6mqggr/image/upload/f_auto,q_auto/v1763733508/AyJ2WKys_eb5cxg.jpg", caption: "Happy Students" },
+    { id: 17, category: "Community", src: "https://res.cloudinary.com/dph6mqggr/image/upload/f_auto,q_auto/v1763733508/Io4TGDR4_elh1bl.jpg", caption: "Parent Interaction" },
+    { id: 18, category: "Campus", src: "https://res.cloudinary.com/dph6mqggr/image/upload/f_auto,q_auto/v1763733508/nHMDJfTx_xt6ndb.jpg", caption: "School Premises" },
+    { id: 19, category: "Education", src: "https://res.cloudinary.com/dph6mqggr/image/upload/f_auto,q_auto/v1763733508/5BzgLBS-_efyogc.jpg", caption: "Bright Futures" },
   ];
 
   const selectedImage = images.find((img) => img.id === selectedId);

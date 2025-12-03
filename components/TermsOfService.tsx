@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useLanguage } from '@/components/LanguageProvider';
 import { motion } from 'framer-motion';
@@ -14,14 +15,14 @@ const TermsOfService: React.FC = () => {
           transition={{ duration: 0.6 }}
           className="bg-white dark:bg-brand-charcoal-light p-8 md:p-16 rounded-[2.5rem] shadow-xl border border-gray-100 dark:border-white/5"
         >
-          <h1 className="text-4xl md:text-5xl font-bold font-serif text-brand-navy dark:text-white mb-6">
+          <h1 className="text-4xl md:text-5xl font-bold font-serif text-brand-navy dark:text-white mb-6 text-center">
             {t('legal.termsOfService')}
           </h1>
-          <p className="text-gray-500 dark:text-gray-400 mb-10 text-sm uppercase tracking-widest font-bold">
+          <p className="text-gray-500 dark:text-gray-400 mb-10 text-sm uppercase tracking-widest font-bold text-center">
             {t('legal.lastUpdated')}: March 2025
           </p>
 
-          <div className="prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 leading-relaxed">
+          <div className="prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 leading-relaxed text-justify">
             <p>
               Please read these Terms of Service ("Terms", "Terms of Service") carefully before using the Gadgade Basic School website (the "Service") operated by Gadgade Basic School ("us", "we", or "our").
             </p>

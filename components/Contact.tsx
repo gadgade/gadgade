@@ -99,7 +99,7 @@ const Contact: React.FC = () => {
           <h2 className="text-4xl md:text-6xl font-bold font-serif text-white mb-6">
             {t('contact.title')}
           </h2>
-          <p className="text-lg text-gray-300 max-w-2xl mx-auto font-light">
+          <p className="text-lg text-gray-300 max-w-2xl mx-auto font-light text-justify md:text-center">
             {t('contact.subtitle')}
           </p>
         </motion.div>
